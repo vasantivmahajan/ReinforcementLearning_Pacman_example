@@ -53,6 +53,7 @@ class QLearningAgent(ReinforcementAgent):
           or the Q node value otherwise
         """
         "*** YOUR CODE HERE ***"
+        #Should return 0.0 if we have never seen a state or the Q node value otherwise
         if (state,action) not in self.qValue:
             self.qValue[(state,action)] = 0.0
         return self.qValue[(state,action)]
@@ -66,11 +67,11 @@ class QLearningAgent(ReinforcementAgent):
           terminal state, you should return a value of 0.0.
         """
         "*** YOUR CODE HERE ***"
-        #get legal actions
+        #get all actions for the state
         actions = self.getLegalActions(state)
         values = []
         
-        #return 0 if there are no actions from this state
+        #if the state has no actions return 0.0
         if len(actions) == 0:
             return 0
         #iterate over actions and add all the qValues from any action from this state
@@ -87,6 +88,7 @@ class QLearningAgent(ReinforcementAgent):
           you should return None.
         """
         "*** YOUR CODE HERE ***"
+        
         actions = self.getLegalActions(state)
         allActions = []
         
@@ -216,7 +218,6 @@ class ApproximateQAgent(PacmanQAgent):
            Should update your weights based on transition
         """
         "*** YOUR CODE HERE ***"
-         #differece = reward + gamma*Q(s', a') - Q(s,a)
         difference = reward + self.discount*self.computeValueFromQValues(nextState) - self.getQValue(state, action)
         weights = self.getWeights()
         #if weight vector is empty, initialize it to zero
